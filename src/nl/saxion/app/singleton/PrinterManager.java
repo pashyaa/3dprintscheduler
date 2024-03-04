@@ -24,7 +24,7 @@ public class PrinterManager {
 	private List<Spool> freeSpools = new ArrayList<>();
 	private List<Printer> freePrinters = new ArrayList<>();
 	private List<PrintTask> pendingPrintTasks = new ArrayList<>();
-	private Map<Printer, PrintTask> runningPrintTasks = new HashMap();
+	private Map<Printer, PrintTask> runningPrintTasks = new HashMap<Printer, PrintTask>();
 
 	private static PrinterManager instance;
 
@@ -305,8 +305,8 @@ public class PrinterManager {
 		for(int i=0; i<spools.length && i < task.getColors().size();i++) {
 			spools[i].reduceLength(task.getPrint().getFilamentLength().get(i));
 		}
+		
 		selectPrintTask(printer);
-
 
 	}
 
