@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.saxion.app.factory.PrintTaskFactory;
 import nl.saxion.app.factory.PrinterFactory;
 import nl.saxion.app.model.FilamentType;
 import nl.saxion.app.model.HousedPrinter;
@@ -56,36 +57,10 @@ public class PrinterManager {
 		if(spools[0] != null) {
 			for (PrintTask printTask : pendingPrintTasks) {
 				if (printer.printFits(printTask.getPrint())) {
-					if (printer instanceof StandardFDM && printTask.getFilamentType() != FilamentType.ABS && printTask.getColors().size() == 1) {
-						if (spools[0].spoolMatch(printTask.getColors().get(0), printTask.getFilamentType())) {
-							runningPrintTasks.put(printer, printTask);
-							freePrinters.remove(printer);
-							chosenTask = printTask;
-							break;
-						}
-						// The housed printer is the only one that can print ABS, but it can also print the others.
-					} else if (printer instanceof HousedPrinter && printTask.getColors().size() == 1) {
-						if (spools[0].spoolMatch(printTask.getColors().get(0), printTask.getFilamentType())) {
-							runningPrintTasks.put(printer, printTask);
-							freePrinters.remove(printer);
-							chosenTask = printTask;
-							break;
-						}
-						// For multicolor the order of spools does matter, so they have to match.
-					} else if (printer instanceof MultiColor && printTask.getFilamentType() != FilamentType.ABS && printTask.getColors().size() <= ((MultiColor) printer).getMaxColors()) {
-						boolean printWorks = true;
-						for (int i = 0; i < spools.length && i < printTask.getColors().size(); i++) {
-							if (!spools[i].spoolMatch(printTask.getColors().get(i), printTask.getFilamentType())) {
-								printWorks = false;
-							}
-						}
-						if (printWorks) {
-							runningPrintTasks.put(printer, printTask);
-							freePrinters.remove(printer);
-							chosenTask = printTask;
-							break;
-						}
-					}
+					runningPrintTasks.put(printer, printTask);
+					freePrinters.remove(printer);
+					chosenTask = PrintTaskFactory.getPrintTask(printer, printTask, spools);
+					break;
 				}
 			}
 		}
@@ -305,7 +280,7 @@ public class PrinterManager {
 		for(int i=0; i<spools.length && i < task.getColors().size();i++) {
 			spools[i].reduceLength(task.getPrint().getFilamentLength().get(i));
 		}
-		
+
 		selectPrintTask(printer);
 
 	}
