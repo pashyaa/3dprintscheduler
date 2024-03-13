@@ -14,12 +14,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import nl.saxion.app.PrinterManager;
 import nl.saxion.app.model.FilamentType;
 import nl.saxion.app.model.Print;
 import nl.saxion.app.model.PrintTask;
 import nl.saxion.app.model.Printer;
 import nl.saxion.app.model.Spool;
-import nl.saxion.app.singleton.PrinterManager;
 
 public class PrinterFacade {
 

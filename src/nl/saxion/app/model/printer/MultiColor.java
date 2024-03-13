@@ -1,9 +1,12 @@
-package nl.saxion.app.model;
+package nl.saxion.app.model.printer;
 
 import java.util.ArrayList;
 
+import nl.saxion.app.model.Spool;
+
 /* Printer capable of printing multiple colors. */
 public class MultiColor extends StandardFDM {
+	
 	private int maxColors;
 	private Spool spool2;
 	private Spool spool3;

@@ -3,6 +3,7 @@ package nl.saxion.app.model;
 import java.util.ArrayList;
 
 public abstract class Printer {
+	
 	private int id;
 	private String name;
 	private String manufacturer;

@@ -1,4 +1,4 @@
-package nl.saxion.app.singleton;
+package nl.saxion.app;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +35,38 @@ public class PrinterManager {
 			instance = new PrinterManager();
 		}
 		return instance;
+	}
+
+	public List<Printer> getPrinters() {
+		return printers;
+	}
+
+	public List<Print> getPrints() {
+		return prints;
+	}
+
+	public List<PrintTask> getPendingPrintTasks() {
+		return pendingPrintTasks; 
+	}
+
+	public PrintTask getPrinterCurrentTask(Printer printer) {
+		if(!runningPrintTasks.containsKey(printer)) {
+			return null;
+		}
+		return runningPrintTasks.get(printer);
+	}
+
+	public List<Spool> getSpools() {
+		return spools;
+	}
+
+	public Spool getSpoolByID(int id) {
+		for(Spool s: spools) {
+			if(s.getId() == id) {
+				return s;
+			}
+		}
+		return null;
 	}
 
 	public void addPrinter(int id, int type, String name, String manufacturer, int maxX, int maxY, int maxZ, int maxColors) {
@@ -88,23 +120,6 @@ public class PrinterManager {
 		prints.add(p);
 	}
 
-	public List<Print> getPrints() {
-		return prints;
-	}
-
-	public List<Printer> getPrinters() {
-		return printers;
-	}
-
-	public PrintTask getPrinterCurrentTask(Printer printer) {
-		if(!runningPrintTasks.containsKey(printer)) {
-			return null;
-		}
-		return runningPrintTasks.get(printer);
-	}
-
-	public List<PrintTask> getPendingPrintTasks() {return pendingPrintTasks; }
-
 	public void addPrintTask(String printName, List<String> colors, FilamentType type) {
 		Print print = findPrint(printName);
 		if (print == null) {
@@ -154,19 +169,6 @@ public class PrinterManager {
 	public void addSpool(Spool spool) {
 		spools.add(spool);
 		freeSpools.add(spool);
-	}
-
-	public List<Spool> getSpools() {
-		return spools;
-	}
-
-	public Spool getSpoolByID(int id) {
-		for(Spool s: spools) {
-			if(s.getId() == id) {
-				return s;
-			}
-		}
-		return null;
 	}
 
 	public void registerPrinterFailure(int printerId) {

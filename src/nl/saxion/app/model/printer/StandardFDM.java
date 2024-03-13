@@ -1,6 +1,10 @@
-package nl.saxion.app.model;
+package nl.saxion.app.model.printer;
 
 import java.util.ArrayList;
+
+import nl.saxion.app.model.Print;
+import nl.saxion.app.model.Printer;
+import nl.saxion.app.model.Spool;
 
 /* Standard cartesian FDM printer */
 public class StandardFDM extends Printer {

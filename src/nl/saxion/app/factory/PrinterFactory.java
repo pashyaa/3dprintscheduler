@@ -1,9 +1,9 @@
 package nl.saxion.app.factory;
 
-import nl.saxion.app.model.HousedPrinter;
-import nl.saxion.app.model.MultiColor;
 import nl.saxion.app.model.Printer;
-import nl.saxion.app.model.StandardFDM;
+import nl.saxion.app.model.printer.HousedPrinter;
+import nl.saxion.app.model.printer.MultiColor;
+import nl.saxion.app.model.printer.StandardFDM;
 
 // Factory
 public class PrinterFactory {
