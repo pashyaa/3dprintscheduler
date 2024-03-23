@@ -43,9 +43,9 @@ public class PrinterFacade {
 
 	public void showMenu() {
 		int choice = 1;
-		while (choice > 0 && choice < 10) {
+		while (choice > 0 && choice < 11) {
 			menu();
-			choice = menuChoice(9);
+			choice = menuChoice(10);
 			System.out.println("-----------------------------------");
 			if (choice == 1) {
 				addNewPrintTask();
@@ -65,6 +65,8 @@ public class PrinterFacade {
 				showSpools();
 			} else if (choice == 9) {
 				showPendingPrintTasks();
+			} else if (choice == 10) {
+				showDashboard();
 			}
 		}
 	}
@@ -80,6 +82,7 @@ public class PrinterFacade {
 		System.out.println("- 7) Show printers");
 		System.out.println("- 8) Show spools");
 		System.out.println("- 9) Show pending print tasks");
+		System.out.println("- 10) Show Dashboard");
 		System.out.println("- 0) Exit");
 	}
 
@@ -245,6 +248,13 @@ public class PrinterFacade {
 		for (PrintTask p : printTasks) {
 			System.out.println(p);
 		}
+		System.out.println("--------------------------------------");
+	}
+
+	private void showDashboard() {
+		System.out.println("-------------- Dashboard -------------");
+		System.out.println("Print Count:        " + manager.getPrintCount());
+		System.out.println("Spool Change Count: " + manager.getSpoolCount());
 		System.out.println("--------------------------------------");
 	}
 
