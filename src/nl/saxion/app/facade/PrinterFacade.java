@@ -14,6 +14,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import nl.saxion.app.DashboardManager;
+import nl.saxion.app.PrinterDashboard;
 import nl.saxion.app.PrinterManager;
 import nl.saxion.app.model.FilamentType;
 import nl.saxion.app.model.Print;
@@ -23,11 +25,20 @@ import nl.saxion.app.model.Spool;
 
 public class PrinterFacade {
 
-	Scanner scanner = new Scanner(System.in);
+	private PrinterManager manager;
+	private DashboardManager dashboardManager;
+	private PrinterDashboard dashboard;
+	private Scanner scanner;
+	private String printStrategy;
 
-	private PrinterManager manager = PrinterManager.getInstance();
-
-	private String printStrategy = "Less Spool Changes";
+	public PrinterFacade() {
+		manager = PrinterManager.getInstance();
+		dashboardManager = new DashboardManager();
+		dashboard = new PrinterDashboard();
+		dashboardManager.attach(dashboard);
+		scanner = new Scanner(System.in);
+		printStrategy = "Less Spool Changes";
+	}
 
 	public void readFromFiles(String[] args) throws Exception {
 		if(args.length > 0) {
@@ -66,7 +77,7 @@ public class PrinterFacade {
 			} else if (choice == 9) {
 				showPendingPrintTasks();
 			} else if (choice == 10) {
-				showDashboard();
+				dashboardManager.notifyObservers(manager.getPrintCount(), manager.getSpoolCount());
 			}
 		}
 	}
@@ -248,13 +259,6 @@ public class PrinterFacade {
 		for (PrintTask p : printTasks) {
 			System.out.println(p);
 		}
-		System.out.println("--------------------------------------");
-	}
-
-	private void showDashboard() {
-		System.out.println("-------------- Dashboard -------------");
-		System.out.println("Print Count:        " + manager.getPrintCount());
-		System.out.println("Spool Change Count: " + manager.getSpoolCount());
 		System.out.println("--------------------------------------");
 	}
 
