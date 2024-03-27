@@ -1,6 +1,3 @@
-# 3dprintscheduler
-3dPrintScheduler
-
 # 3D Print Scheduler
 
 This program was written to make deciding which print to start easier. 
